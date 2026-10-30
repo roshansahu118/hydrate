@@ -4,6 +4,7 @@ import { ActivityIndicator, View } from "react-native";
 
 import { HydrateProvider, useHydrate } from "@/data";
 import { LocaleProvider, useLocale } from "@/i18n";
+import { ReminderSync } from "@/notifications";
 import { ThemeProvider, useTheme } from "@/theme";
 
 function RootNavigator() {
@@ -51,6 +52,7 @@ export default function RootLayout() {
     <ThemeProvider>
       <LocaleProvider>
         <HydrateProvider>
+          <ReminderSync />
           <RootNavigator />
         </HydrateProvider>
       </LocaleProvider>

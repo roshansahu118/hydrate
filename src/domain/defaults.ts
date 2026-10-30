@@ -9,7 +9,8 @@ export const MAX_INTAKE_ML = 2000;
 
 export const DEFAULT_NOTIFICATION_PREFS: NotificationPrefs = {
   enabled: false,
-  intervalMinutes: 90,
+  intervalMinutes: 60,
+  quietHoursEnabled: true,
   quietHoursStart: "22:00",
   quietHoursEnd: "07:00",
 };

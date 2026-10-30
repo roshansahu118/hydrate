@@ -124,11 +124,14 @@ export function HydrateProvider({ children }: { children: ReactNode }) {
 
   const updateNotificationPrefs = useCallback(
     async (prefs: Partial<NotificationPrefs>) => {
+      let nextPrefs: NotificationPrefs | null = null;
       setNotificationPrefs((current) => {
-        const next = { ...current, ...prefs };
-        void saveNotificationPrefs(next);
-        return next;
+        nextPrefs = { ...current, ...prefs };
+        return nextPrefs;
       });
+      if (nextPrefs) {
+        await saveNotificationPrefs(nextPrefs);
+      }
     },
     [],
   );

@@ -5,23 +5,40 @@ import {
 import { loadJson, saveJson } from "./json";
 import { STORAGE_KEYS } from "./keys";
 
-function isNotificationPrefs(value: unknown): value is NotificationPrefs {
-  if (!value || typeof value !== "object") return false;
+function normalizePrefs(value: unknown): NotificationPrefs | null {
+  if (!value || typeof value !== "object") return null;
   const candidate = value as Partial<NotificationPrefs>;
-  return (
-    typeof candidate.enabled === "boolean" &&
-    typeof candidate.intervalMinutes === "number" &&
-    typeof candidate.quietHoursStart === "string" &&
-    typeof candidate.quietHoursEnd === "string"
-  );
+  if (
+    typeof candidate.enabled !== "boolean" ||
+    typeof candidate.intervalMinutes !== "number" ||
+    typeof candidate.quietHoursStart !== "string" ||
+    typeof candidate.quietHoursEnd !== "string"
+  ) {
+    return null;
+  }
+
+  return {
+    enabled: candidate.enabled,
+    intervalMinutes: candidate.intervalMinutes,
+    quietHoursEnabled:
+      typeof candidate.quietHoursEnabled === "boolean"
+        ? candidate.quietHoursEnabled
+        : DEFAULT_NOTIFICATION_PREFS.quietHoursEnabled,
+    quietHoursStart: candidate.quietHoursStart,
+    quietHoursEnd: candidate.quietHoursEnd,
+  };
 }
 
 export async function loadNotificationPrefs(): Promise<NotificationPrefs> {
-  return loadJson(
-    STORAGE_KEYS.notificationPrefs,
-    DEFAULT_NOTIFICATION_PREFS,
-    isNotificationPrefs,
-  );
+  try {
+    const raw = await loadJson<unknown>(
+      STORAGE_KEYS.notificationPrefs,
+      DEFAULT_NOTIFICATION_PREFS,
+    );
+    return normalizePrefs(raw) ?? DEFAULT_NOTIFICATION_PREFS;
+  } catch {
+    return DEFAULT_NOTIFICATION_PREFS;
+  }
 }
 
 export async function saveNotificationPrefs(

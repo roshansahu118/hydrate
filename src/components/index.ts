@@ -3,6 +3,7 @@ export type { AppTextProps, AppTextColor } from "./AppText";
 export { Screen } from "./Screen";
 export { ThemeModePicker } from "./ThemeModePicker";
 export { LanguagePicker } from "./LanguagePicker";
+export { ReminderSettings } from "./ReminderSettings";
 
 export {
   Button,

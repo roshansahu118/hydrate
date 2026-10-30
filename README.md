@@ -13,7 +13,7 @@ Water drink reminder app (React Native + Expo). Built module-wise.
 | M4 Storage / domain | Done | Profile, intake, prefs + HydrateProvider |
 | M5 Onboarding | Done | Welcome → name → goal; gated until done |
 | M6 Home intake | Done | One-tap add, custom ml, undo, goal status |
-| M7 Notifications | Pending | |
+| M7 Notifications | Done | Interval reminders + sound + quiet hours |
 | M8 History + charts | Pending | |
 | M9 Settings | Pending | |
 | M10 Polish | Pending | |
@@ -61,3 +61,11 @@ npm start
 - Home intake UX: one-tap quick amounts, custom ml field, remaining/goal status, undo banner
 - Helpers: `goalStatus`, `remainingMl`, `parseCustomAmountMl` in `src/domain/intake.ts`
 - Home-only UI pieces in `src/home/`; use `useHydrate().addIntake` / `removeIntake`
+
+## M7 notes
+
+- Local reminders via `expo-notifications` (`src/notifications/`)
+- Settings → Drink reminders: enable, interval presets (10–120 min) or custom minutes
+- Quiet hours toggle (default `22:00`–`07:00`); turn off to test overnight
+- **Send test reminder now** button for instant check; sound on; `ReminderSync` keeps schedule fresh
+- **Not supported in browser** — use Expo Go on a phone; grant notification permission when enabling

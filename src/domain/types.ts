@@ -21,6 +21,8 @@ export type NotificationPrefs = {
   enabled: boolean;
   /** Minutes between reminders when enabled. */
   intervalMinutes: number;
+  /** When false, reminders fire overnight too (useful for testing). */
+  quietHoursEnabled: boolean;
   /** Local time HH:mm */
   quietHoursStart: string;
   /** Local time HH:mm */

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { AppText } from "@/components/AppText";
 import { LanguagePicker } from "@/components/LanguagePicker";
+import { ReminderSettings } from "@/components/ReminderSettings";
 import { Screen } from "@/components/Screen";
 import { ThemeModePicker } from "@/components/ThemeModePicker";
 import {
@@ -20,7 +21,7 @@ export default function SettingsScreen() {
   const { t } = useTranslation();
   const { mode, scheme, spacing } = useTheme();
   const { mode: localeMode, language } = useLocale();
-  const { profile, notificationPrefs, updateProfile } = useHydrate();
+  const { profile, updateProfile } = useHydrate();
 
   return (
     <Screen scroll>
@@ -48,6 +49,10 @@ export default function SettingsScreen() {
         <LanguagePicker />
       </View>
 
+      <View style={{ marginTop: spacing.lg }}>
+        <ReminderSettings />
+      </View>
+
       <Card style={{ marginTop: spacing.lg }}>
         <SectionHeader
           title={t("settings.profile")}
@@ -67,16 +72,6 @@ export default function SettingsScreen() {
           subtitle={t("settings.dailyGoalValue", {
             goal: profile.dailyGoalMl,
           })}
-        />
-        <ListRow
-          title={t("settings.notificationsRow")}
-          subtitle={
-            notificationPrefs.enabled
-              ? t("settings.notificationsOn", {
-                  minutes: notificationPrefs.intervalMinutes,
-                })
-              : t("settings.notificationsOff")
-          }
         />
       </Card>
     </Screen>
