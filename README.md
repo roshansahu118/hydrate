@@ -10,7 +10,7 @@ Water drink reminder app (React Native + Expo). Built module-wise.
 | M1 Theme | Done | Light / dark / system + AppText |
 | M2 i18n | Done | English / Hindi / system + LanguagePicker |
 | M3 Reusable UI kit | Done | Button, Card, Chip, TextField, etc. |
-| M4 Storage / domain | Pending | |
+| M4 Storage / domain | Done | Profile, intake, prefs + HydrateProvider |
 | M5 Onboarding | Pending | |
 | M6 Home intake | Pending | |
 | M7 Notifications | Pending | |
@@ -43,3 +43,9 @@ npm start
 - Shared primitives live in `src/components/ui/`
 - Prefer kit components (`Button`, `Card`, `Chip`, `TextField`, `ListRow`, …) over one-off styled `View`/`Pressable`
 - ThemeModePicker / LanguagePicker use `SegmentedControl`
+
+## M4 notes
+
+- Domain types/helpers live in `src/domain/` (`UserProfile`, `IntakeEntry`, day keys, totals)
+- Persistence in `src/storage/` via AsyncStorage JSON (`profile`, `intakeEntries`, `notificationPrefs`)
+- App state: `useHydrate()` from `src/data/HydrateProvider` — prefer this over ad-hoc storage reads in screens

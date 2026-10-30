@@ -2,14 +2,16 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { ActivityIndicator, View } from "react-native";
 
+import { HydrateProvider, useHydrate } from "@/data";
 import { LocaleProvider, useLocale } from "@/i18n";
 import { ThemeProvider, useTheme } from "@/theme";
 
 function RootNavigator() {
   const { colors, isDark, isReady: themeReady } = useTheme();
   const { isReady: localeReady } = useLocale();
+  const { isReady: hydrateReady } = useHydrate();
 
-  if (!themeReady || !localeReady) {
+  if (!themeReady || !localeReady || !hydrateReady) {
     return (
       <View
         style={{
@@ -43,7 +45,9 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <LocaleProvider>
-        <RootNavigator />
+        <HydrateProvider>
+          <RootNavigator />
+        </HydrateProvider>
       </LocaleProvider>
     </ThemeProvider>
   );

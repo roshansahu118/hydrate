@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 
@@ -7,13 +6,13 @@ import { LanguagePicker } from "@/components/LanguagePicker";
 import { Screen } from "@/components/Screen";
 import { ThemeModePicker } from "@/components/ThemeModePicker";
 import {
-  Button,
   Card,
   Divider,
   ListRow,
   SectionHeader,
   TextField,
 } from "@/components/ui";
+import { useHydrate } from "@/data";
 import { useLocale } from "@/i18n";
 import { useTheme } from "@/theme";
 
@@ -21,7 +20,7 @@ export default function SettingsScreen() {
   const { t } = useTranslation();
   const { mode, scheme, spacing } = useTheme();
   const { mode: localeMode, language } = useLocale();
-  const [name, setName] = useState("");
+  const { profile, notificationPrefs, updateProfile } = useHydrate();
 
   return (
     <Screen scroll>
@@ -51,32 +50,33 @@ export default function SettingsScreen() {
 
       <Card style={{ marginTop: spacing.lg }}>
         <SectionHeader
-          title={t("settings.kitPreview")}
-          subtitle={t("settings.kitPreviewSubtitle")}
+          title={t("settings.profile")}
+          subtitle={t("settings.profileSubtitle")}
         />
         <TextField
           label={t("settings.sampleName")}
           placeholder={t("settings.sampleNamePlaceholder")}
-          value={name}
-          onChangeText={setName}
+          value={profile.name}
+          onChangeText={(name) => {
+            void updateProfile({ name });
+          }}
         />
-        <View style={{ flexDirection: "row", gap: spacing.sm }}>
-          <Button label={t("settings.primaryAction")} />
-          <Button
-            label={t("settings.secondaryAction")}
-            variant="secondary"
-          />
-        </View>
         <Divider />
         <ListRow
-          title={t("settings.notificationsRow")}
-          subtitle={t("settings.notificationsRowSubtitle")}
-          showChevron
-          onPress={() => undefined}
+          title={t("settings.dailyGoalRow")}
+          subtitle={t("settings.dailyGoalValue", {
+            goal: profile.dailyGoalMl,
+          })}
         />
         <ListRow
-          title={t("settings.dailyGoalRow")}
-          subtitle={t("settings.dailyGoalRowSubtitle")}
+          title={t("settings.notificationsRow")}
+          subtitle={
+            notificationPrefs.enabled
+              ? t("settings.notificationsOn", {
+                  minutes: notificationPrefs.intervalMinutes,
+                })
+              : t("settings.notificationsOff")
+          }
         />
       </Card>
     </Screen>

@@ -12,18 +12,16 @@ import {
   ProgressBar,
   SectionHeader,
 } from "@/components/ui";
+import { useHydrate } from "@/data";
 import { useTheme } from "@/theme";
-
-const DEMO_GOAL_ML = 2500;
-const QUICK_AMOUNTS = [250, 500, 750] as const;
 
 export default function HomeScreen() {
   const { t } = useTranslation();
   const { spacing } = useTheme();
-  const [currentMl, setCurrentMl] = useState(750);
-  const [selectedAmount, setSelectedAmount] = useState<(typeof QUICK_AMOUNTS)[number]>(250);
-
-  const progress = currentMl / DEMO_GOAL_ML;
+  const { profile, todayTotalMl, progress, addIntake } = useHydrate();
+  const [selectedAmount, setSelectedAmount] = useState(
+    profile.quickAmountsMl[0] ?? 250,
+  );
 
   return (
     <Screen scroll>
@@ -36,8 +34,8 @@ export default function HomeScreen() {
         <SectionHeader title={t("home.todayProgress")} />
         <AppText variant="display" color="primary">
           {t("home.progressLabel", {
-            current: currentMl,
-            goal: DEMO_GOAL_ML,
+            current: todayTotalMl,
+            goal: profile.dailyGoalMl,
           })}
         </AppText>
         <ProgressBar progress={progress} />
@@ -45,11 +43,13 @@ export default function HomeScreen() {
 
       <View style={{ marginTop: spacing.lg, gap: spacing.sm }}>
         <SectionHeader title={t("home.quickAdd")} />
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: spacing.sm }}>
-          {QUICK_AMOUNTS.map((amount) => (
+        <View
+          style={{ flexDirection: "row", flexWrap: "wrap", gap: spacing.sm }}
+        >
+          {profile.quickAmountsMl.map((amount) => (
             <Chip
               key={amount}
-              label={t(`home.ml${amount}`)}
+              label={t("home.mlAmount", { amount })}
               selected={selectedAmount === amount}
               onPress={() => setSelectedAmount(amount)}
             />
@@ -65,14 +65,18 @@ export default function HomeScreen() {
         >
           <Button
             label={t("home.addWater")}
-            onPress={() => setCurrentMl((value) => value + selectedAmount)}
+            onPress={() => {
+              void addIntake(selectedAmount);
+            }}
             style={{ flex: 1 }}
             fullWidth
           />
           <IconButton
             glyph="+"
             label={t("home.addWater")}
-            onPress={() => setCurrentMl((value) => value + selectedAmount)}
+            onPress={() => {
+              void addIntake(selectedAmount);
+            }}
           />
         </View>
       </View>
