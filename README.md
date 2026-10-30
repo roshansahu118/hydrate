@@ -11,7 +11,7 @@ Water drink reminder app (React Native + Expo). Built module-wise.
 | M2 i18n | Done | English / Hindi / system + LanguagePicker |
 | M3 Reusable UI kit | Done | Button, Card, Chip, TextField, etc. |
 | M4 Storage / domain | Done | Profile, intake, prefs + HydrateProvider |
-| M5 Onboarding | Pending | |
+| M5 Onboarding | Done | Welcome → name → goal; gated until done |
 | M6 Home intake | Pending | |
 | M7 Notifications | Pending | |
 | M8 History + charts | Pending | |
@@ -49,3 +49,9 @@ npm start
 - Domain types/helpers live in `src/domain/` (`UserProfile`, `IntakeEntry`, day keys, totals)
 - Persistence in `src/storage/` via AsyncStorage JSON (`profile`, `intakeEntries`, `notificationPrefs`)
 - App state: `useHydrate()` from `src/data/HydrateProvider` — prefer this over ad-hoc storage reads in screens
+
+## M5 notes
+
+- Flow lives under `app/onboarding/` (welcome → name → goal)
+- Root stack uses `Stack.Protected` on `profile.onboarded`
+- Draft state: `OnboardingDraftProvider` in `src/onboarding/`; finish sets `onboarded: true` via `updateProfile`

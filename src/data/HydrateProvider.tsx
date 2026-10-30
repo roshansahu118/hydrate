@@ -79,11 +79,14 @@ export function HydrateProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const updateProfile = useCallback(async (update: ProfileUpdate) => {
+    let nextProfile: UserProfile | null = null;
     setProfile((current) => {
-      const next = applyProfileUpdate(current, update);
-      void saveProfile(next);
-      return next;
+      nextProfile = applyProfileUpdate(current, update);
+      return nextProfile;
     });
+    if (nextProfile) {
+      await saveProfile(nextProfile);
+    }
   }, []);
 
   const addIntake = useCallback(async (amountMl: number, note?: string) => {

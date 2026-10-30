@@ -9,7 +9,7 @@ import { ThemeProvider, useTheme } from "@/theme";
 function RootNavigator() {
   const { colors, isDark, isReady: themeReady } = useTheme();
   const { isReady: localeReady } = useLocale();
-  const { isReady: hydrateReady } = useHydrate();
+  const { isReady: hydrateReady, profile } = useHydrate();
 
   if (!themeReady || !localeReady || !hydrateReady) {
     return (
@@ -35,7 +35,12 @@ function RootNavigator() {
           contentStyle: { backgroundColor: colors.background },
         }}
       >
-        <Stack.Screen name="(tabs)" />
+        <Stack.Protected guard={!profile.onboarded}>
+          <Stack.Screen name="onboarding" />
+        </Stack.Protected>
+        <Stack.Protected guard={profile.onboarded}>
+          <Stack.Screen name="(tabs)" />
+        </Stack.Protected>
       </Stack>
     </>
   );

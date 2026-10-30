@@ -25,7 +25,11 @@ export default function HomeScreen() {
 
   return (
     <Screen scroll>
-      <AppText variant="title">{t("home.title")}</AppText>
+      <AppText variant="title">
+        {profile.name
+          ? t("home.greeting", { name: profile.name })
+          : t("home.title")}
+      </AppText>
       <AppText variant="body" color="secondary">
         {t("home.subtitle")}
       </AppText>
