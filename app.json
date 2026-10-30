@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "Hydrate",
+    "slug": "hydrate",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "hydrate",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0B1F2A"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hydrate.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0B1F2A"
+      },
+      "package": "com.hydrate.app"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

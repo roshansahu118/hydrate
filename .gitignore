@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native builds
+android/
+ios/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Metro
+.metro-health-check*
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# TypeScript
+*.tsbuildinfo
+
+# Debug / logs
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+
+# Testing
+coverage/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Local / temp
+*.local
+tmp/
+temp/
