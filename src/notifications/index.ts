@@ -1,8 +1,16 @@
 export { configureNotificationHandler } from "./configure";
 export {
   ensureReminderPermissions,
-  REMINDER_CHANNEL_ID,
+  getReminderChannelId,
 } from "./permissions";
+export {
+  REMINDER_SOUND_FILE,
+  REMINDER_CHANNEL_ID_CUSTOM,
+  REMINDER_CHANNEL_ID_DEFAULT,
+  canUseCustomReminderSound,
+  getReminderSound,
+  isExpoGo,
+} from "./sound";
 export {
   cancelHydrateReminders,
   syncHydrateReminders,

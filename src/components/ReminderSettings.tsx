@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useHydrate } from "../data";
 import {
   REMINDER_INTERVAL_PRESETS_MIN,
+  canUseCustomReminderSound,
   clampReminderIntervalMinutes,
   ensureReminderPermissions,
   sendTestReminder,
@@ -216,7 +217,9 @@ export function ReminderSettings() {
         }}
       />
       <AppText variant="caption" color="muted">
-        {t("reminders.soundHint")}
+        {canUseCustomReminderSound()
+          ? t("reminders.soundCustomActive")
+          : t("reminders.soundHint")}
       </AppText>
     </Card>
   );

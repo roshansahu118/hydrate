@@ -36,7 +36,8 @@
         "expo-notifications",
         {
           "color": "#1A8FBF",
-          "defaultChannel": "hydrate-reminders"
+          "defaultChannel": "hydrate-reminders-custom-v1",
+          "sounds": ["./assets/sounds/hydrate_drip.wav"]
         }
       ]
     ],

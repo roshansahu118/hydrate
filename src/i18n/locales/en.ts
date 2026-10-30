@@ -89,7 +89,9 @@ export const en = {
     quietHoursHint: "On: no reminders {{start}}–{{end}}",
     quietHoursOffHint: "Off: reminders can fire overnight (good for testing)",
     testNow: "Send test reminder now",
-    soundHint: "Reminders play the default notification sound.",
+    soundHint:
+      "Expo Go = phone system sound. Custom drip sound needs a native build (expo run:android / EAS).",
+    soundCustomActive: "Playing custom sound: hydrate_drip.wav",
     notificationTitle: "Time to hydrate 💧",
     notificationBody: "Take a sip of water, then log it in Hydrate.",
     testNotificationBody: "Test reminder — agar ye dikha, scheduling theek hai.",

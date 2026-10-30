@@ -68,4 +68,5 @@ npm start
 - Settings → Drink reminders: enable, interval presets (10–120 min) or custom minutes
 - Quiet hours toggle (default `22:00`–`07:00`); turn off to test overnight
 - **Send test reminder now** button for instant check; sound on; `ReminderSync` keeps schedule fresh
-- **Not supported in browser** — use Expo Go on a phone; grant notification permission when enabling
+- **Not supported in browser** — use a phone; grant notification permission when enabling
+- Custom sound: drop `.wav` in `assets/sounds/`, list it in `app.json` → `expo-notifications.sounds`, set filename in `src/notifications/sound.ts`, then **rebuild native** (`eas build` / `npx expo prebuild`). Expo Go cannot load your custom file.

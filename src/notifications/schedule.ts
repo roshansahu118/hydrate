@@ -3,8 +3,8 @@ import * as Notifications from "expo-notifications";
 
 import type { NotificationPrefs } from "../domain";
 import { clampReminderIntervalMinutes } from "./intervals";
-import { REMINDER_CHANNEL_ID } from "./permissions";
 import { isInQuietHours } from "./quietHours";
+import { getReminderChannelId, getReminderSound } from "./sound";
 
 export const REMINDER_NOTIFICATION_DATA = {
   type: "hydrate-reminder",
@@ -61,6 +61,8 @@ export async function syncHydrateReminders(
     }
 
     const dates = buildFireDates(prefs);
+    const sound = getReminderSound();
+    const channelId = getReminderChannelId();
 
     await Promise.all(
       dates.map((date) =>
@@ -68,15 +70,13 @@ export async function syncHydrateReminders(
           content: {
             title: copy.title,
             body: copy.body,
-            sound: "default",
+            sound,
             data: { ...REMINDER_NOTIFICATION_DATA },
           },
           trigger: {
             type: Notifications.SchedulableTriggerInputTypes.DATE,
             date,
-            ...(Platform.OS === "android"
-              ? { channelId: REMINDER_CHANNEL_ID }
-              : {}),
+            ...(Platform.OS === "android" ? { channelId } : {}),
           },
         }),
       ),
@@ -96,11 +96,14 @@ export async function sendTestReminder(copy: ReminderCopy): Promise<boolean> {
   }
 
   try {
+    const sound = getReminderSound();
+    const channelId = getReminderChannelId();
+
     await Notifications.scheduleNotificationAsync({
       content: {
         title: copy.title,
         body: copy.body,
-        sound: "default",
+        sound,
         data: { ...REMINDER_NOTIFICATION_DATA, test: true },
       },
       trigger:
@@ -108,7 +111,7 @@ export async function sendTestReminder(copy: ReminderCopy): Promise<boolean> {
           ? {
               type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
               seconds: 1,
-              channelId: REMINDER_CHANNEL_ID,
+              channelId,
             }
           : null,
     });

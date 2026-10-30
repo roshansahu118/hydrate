@@ -87,7 +87,9 @@ export const hi: TranslationResources = {
     quietHoursHint: "चालू: {{start}}–{{end}} में रिमाइंडर नहीं",
     quietHoursOffHint: "बंद: रात में भी रिमाइंडर आ सकते हैं (टेस्ट के लिए)",
     testNow: "अभी टेस्ट रिमाइंडर भेजो",
-    soundHint: "रिमाइंडर डिफ़ॉल्ट नोटिफिकेशन साउंड बजाते हैं।",
+    soundHint:
+      "Expo Go = phone ka system sound. Custom drip ke liye native build chahiye (expo run:android / EAS).",
+    soundCustomActive: "Custom sound chal raha hai: hydrate_drip.wav",
     notificationTitle: "पानी पीने का समय 💧",
     notificationBody: "एक चुस्की लें, फिर Hydrate में लॉग करें।",
     testNotificationBody: "टेस्ट रिमाइंडर — ये दिखे तो scheduling ठीक है।",
