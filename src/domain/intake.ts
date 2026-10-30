@@ -50,6 +50,27 @@ export function progressTowardGoal(totalMl: number, goalMl: number): number {
   return Math.max(0, Math.min(1, totalMl / goalMl));
 }
 
+export function remainingMl(totalMl: number, goalMl: number): number {
+  return Math.max(0, goalMl - totalMl);
+}
+
+export type GoalStatus = "empty" | "in_progress" | "reached" | "exceeded";
+
+export function goalStatus(totalMl: number, goalMl: number): GoalStatus {
+  if (totalMl <= 0) return "empty";
+  if (totalMl < goalMl) return "in_progress";
+  if (totalMl === goalMl) return "reached";
+  return "exceeded";
+}
+
+export function parseCustomAmountMl(raw: string): number | null {
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+  const value = Number(trimmed);
+  if (!Number.isFinite(value)) return null;
+  return clampIntakeMl(value);
+}
+
 export function groupEntriesByDay(
   entries: IntakeEntry[],
 ): Record<DayKey, IntakeEntry[]> {

@@ -31,8 +31,12 @@ export {
   entriesForDay,
   totalMlForDay,
   progressTowardGoal,
+  remainingMl,
+  goalStatus,
+  parseCustomAmountMl,
   groupEntriesByDay,
 } from "./intake";
+export type { GoalStatus } from "./intake";
 
 export {
   clampDailyGoalMl,

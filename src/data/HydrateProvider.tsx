@@ -43,6 +43,7 @@ type HydrateContextValue = {
   updateProfile: (update: ProfileUpdate) => Promise<void>;
   addIntake: (amountMl: number, note?: string) => Promise<IntakeEntry>;
   removeIntake: (id: string) => Promise<void>;
+  undoLastIntake: () => Promise<IntakeEntry | null>;
   updateNotificationPrefs: (
     prefs: Partial<NotificationPrefs>,
   ) => Promise<void>;
@@ -104,6 +105,23 @@ export function HydrateProvider({ children }: { children: ReactNode }) {
     setEntries(next);
   }, []);
 
+  const undoLastIntake = useCallback(async () => {
+    let removed: IntakeEntry | null = null;
+    setEntries((current) => {
+      const today = entriesForDay(current);
+      const latest = today[0];
+      if (!latest) {
+        removed = null;
+        return current;
+      }
+      removed = latest;
+      const next = current.filter((entry) => entry.id !== latest.id);
+      void saveIntakeEntries(next);
+      return next;
+    });
+    return removed;
+  }, []);
+
   const updateNotificationPrefs = useCallback(
     async (prefs: Partial<NotificationPrefs>) => {
       setNotificationPrefs((current) => {
@@ -134,6 +152,7 @@ export function HydrateProvider({ children }: { children: ReactNode }) {
       updateProfile,
       addIntake,
       removeIntake,
+      undoLastIntake,
       updateNotificationPrefs,
     }),
     [
@@ -147,6 +166,7 @@ export function HydrateProvider({ children }: { children: ReactNode }) {
       updateProfile,
       addIntake,
       removeIntake,
+      undoLastIntake,
       updateNotificationPrefs,
     ],
   );

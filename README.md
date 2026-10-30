@@ -12,7 +12,7 @@ Water drink reminder app (React Native + Expo). Built module-wise.
 | M3 Reusable UI kit | Done | Button, Card, Chip, TextField, etc. |
 | M4 Storage / domain | Done | Profile, intake, prefs + HydrateProvider |
 | M5 Onboarding | Done | Welcome → name → goal; gated until done |
-| M6 Home intake | Pending | |
+| M6 Home intake | Done | One-tap add, custom ml, undo, goal status |
 | M7 Notifications | Pending | |
 | M8 History + charts | Pending | |
 | M9 Settings | Pending | |
@@ -55,3 +55,9 @@ npm start
 - Flow lives under `app/onboarding/` (welcome → name → goal)
 - Root stack uses `Stack.Protected` on `profile.onboarded`
 - Draft state: `OnboardingDraftProvider` in `src/onboarding/`; finish sets `onboarded: true` via `updateProfile`
+
+## M6 notes
+
+- Home intake UX: one-tap quick amounts, custom ml field, remaining/goal status, undo banner
+- Helpers: `goalStatus`, `remainingMl`, `parseCustomAmountMl` in `src/domain/intake.ts`
+- Home-only UI pieces in `src/home/`; use `useHydrate().addIntake` / `removeIntake`
