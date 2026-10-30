@@ -9,7 +9,7 @@ Water drink reminder app (React Native + Expo). Built module-wise.
 | M0 Foundation | Done | Expo Router tabs shell |
 | M1 Theme | Done | Light / dark / system + AppText |
 | M2 i18n | Done | English / Hindi / system + LanguagePicker |
-| M3 Reusable UI kit | Pending | |
+| M3 Reusable UI kit | Done | Button, Card, Chip, TextField, etc. |
 | M4 Storage / domain | Pending | |
 | M5 Onboarding | Pending | |
 | M6 Home intake | Pending | |
@@ -37,3 +37,9 @@ npm start
 - Strings live in `src/i18n/locales/` (`en`, `hi`)
 - Preference persisted via AsyncStorage (`en` \| `hi` \| `system`)
 - Use `useTranslation()` / `t('…')` for UI copy; add keys to both locale files when introducing new text
+
+## M3 notes
+
+- Shared primitives live in `src/components/ui/`
+- Prefer kit components (`Button`, `Card`, `Chip`, `TextField`, `ListRow`, …) over one-off styled `View`/`Pressable`
+- ThemeModePicker / LanguagePicker use `SegmentedControl`
