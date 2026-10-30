@@ -6,22 +6,15 @@ import { LanguagePicker } from "@/components/LanguagePicker";
 import { ReminderSettings } from "@/components/ReminderSettings";
 import { Screen } from "@/components/Screen";
 import { ThemeModePicker } from "@/components/ThemeModePicker";
-import {
-  Card,
-  Divider,
-  ListRow,
-  SectionHeader,
-  TextField,
-} from "@/components/ui";
-import { useHydrate } from "@/data";
+import { SectionHeader } from "@/components/ui";
 import { useLocale } from "@/i18n";
+import { AboutCard, DataSettings, ProfileSettings } from "@/settings";
 import { useTheme } from "@/theme";
 
 export default function SettingsScreen() {
   const { t } = useTranslation();
   const { mode, scheme, spacing } = useTheme();
   const { mode: localeMode, language } = useLocale();
-  const { profile, updateProfile } = useHydrate();
 
   return (
     <Screen scroll>
@@ -30,7 +23,11 @@ export default function SettingsScreen() {
         {t("settings.subtitle")}
       </AppText>
 
-      <View style={{ marginTop: spacing.md, gap: spacing.sm }}>
+      <View style={{ marginTop: spacing.md }}>
+        <ProfileSettings />
+      </View>
+
+      <View style={{ marginTop: spacing.lg, gap: spacing.sm }}>
         <SectionHeader
           title={t("settings.theme")}
           subtitle={t("settings.preference", { mode, scheme })}
@@ -53,27 +50,13 @@ export default function SettingsScreen() {
         <ReminderSettings />
       </View>
 
-      <Card style={{ marginTop: spacing.lg }}>
-        <SectionHeader
-          title={t("settings.profile")}
-          subtitle={t("settings.profileSubtitle")}
-        />
-        <TextField
-          label={t("settings.sampleName")}
-          placeholder={t("settings.sampleNamePlaceholder")}
-          value={profile.name}
-          onChangeText={(name) => {
-            void updateProfile({ name });
-          }}
-        />
-        <Divider />
-        <ListRow
-          title={t("settings.dailyGoalRow")}
-          subtitle={t("settings.dailyGoalValue", {
-            goal: profile.dailyGoalMl,
-          })}
-        />
-      </Card>
+      <View style={{ marginTop: spacing.lg }}>
+        <DataSettings />
+      </View>
+
+      <View style={{ marginTop: spacing.lg, marginBottom: spacing.md }}>
+        <AboutCard />
+      </View>
     </Screen>
   );
 }

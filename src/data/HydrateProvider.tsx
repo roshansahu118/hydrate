@@ -15,7 +15,9 @@ import {
   createIntakeEntry,
   DEFAULT_NOTIFICATION_PREFS,
   entriesForDay,
+  isSameDay,
   progressTowardGoal,
+  toDayKey,
   totalMlForDay,
   type IntakeEntry,
   type NotificationPrefs,
@@ -23,6 +25,7 @@ import {
   type UserProfile,
 } from "../domain";
 import {
+  clearAllIntakeEntries,
   loadIntakeEntries,
   loadNotificationPrefs,
   loadProfile,
@@ -44,6 +47,9 @@ type HydrateContextValue = {
   addIntake: (amountMl: number, note?: string) => Promise<IntakeEntry>;
   removeIntake: (id: string) => Promise<void>;
   undoLastIntake: () => Promise<IntakeEntry | null>;
+  clearTodayIntake: () => Promise<void>;
+  clearAllIntake: () => Promise<void>;
+  resetOnboarding: () => Promise<void>;
   updateNotificationPrefs: (
     prefs: Partial<NotificationPrefs>,
   ) => Promise<void>;
@@ -122,6 +128,31 @@ export function HydrateProvider({ children }: { children: ReactNode }) {
     return removed;
   }, []);
 
+  const clearTodayIntake = useCallback(async () => {
+    const today = toDayKey();
+    setEntries((current) => {
+      const next = current.filter((entry) => !isSameDay(entry.createdAt, today));
+      void saveIntakeEntries(next);
+      return next;
+    });
+  }, []);
+
+  const clearAllIntake = useCallback(async () => {
+    await clearAllIntakeEntries();
+    setEntries([]);
+  }, []);
+
+  const resetOnboarding = useCallback(async () => {
+    let nextProfile: UserProfile | null = null;
+    setProfile((current) => {
+      nextProfile = applyProfileUpdate(current, { onboarded: false });
+      return nextProfile;
+    });
+    if (nextProfile) {
+      await saveProfile(nextProfile);
+    }
+  }, []);
+
   const updateNotificationPrefs = useCallback(
     async (prefs: Partial<NotificationPrefs>) => {
       let nextPrefs: NotificationPrefs | null = null;
@@ -156,6 +187,9 @@ export function HydrateProvider({ children }: { children: ReactNode }) {
       addIntake,
       removeIntake,
       undoLastIntake,
+      clearTodayIntake,
+      clearAllIntake,
+      resetOnboarding,
       updateNotificationPrefs,
     }),
     [
@@ -170,6 +204,9 @@ export function HydrateProvider({ children }: { children: ReactNode }) {
       addIntake,
       removeIntake,
       undoLastIntake,
+      clearTodayIntake,
+      clearAllIntake,
+      resetOnboarding,
       updateNotificationPrefs,
     ],
   );

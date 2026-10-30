@@ -18,6 +18,7 @@ export {
   saveIntakeEntries,
   appendIntakeEntry,
   removeIntakeEntry,
+  clearAllIntakeEntries,
 } from "./intakeStore";
 export {
   loadNotificationPrefs,

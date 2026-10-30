@@ -9,6 +9,9 @@ export type {
 export {
   DEFAULT_DAILY_GOAL_ML,
   DEFAULT_QUICK_AMOUNTS_ML,
+  QUICK_AMOUNT_OPTIONS_ML,
+  MIN_QUICK_AMOUNTS,
+  MAX_QUICK_AMOUNTS,
   DEFAULT_NOTIFICATION_PREFS,
   MIN_DAILY_GOAL_ML,
   MAX_DAILY_GOAL_ML,
@@ -57,6 +60,7 @@ export type { GoalStatus } from "./intake";
 export {
   clampDailyGoalMl,
   normalizeQuickAmounts,
+  toggleQuickAmount,
   applyProfileUpdate,
   isProfileComplete,
 } from "./profile";

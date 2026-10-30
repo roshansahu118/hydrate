@@ -15,7 +15,7 @@ Water drink reminder app (React Native + Expo). Built module-wise.
 | M6 Home intake | Done | One-tap add, custom ml, undo, goal status |
 | M7 Notifications | Done | Interval reminders + sound + quiet hours |
 | M8 History + charts | Done | 7/14-day bars, stats, day drill-down |
-| M9 Settings | Pending | |
+| M9 Settings | Done | Goal, quick amounts, data reset, about |
 | M10 Polish | Pending | |
 
 ## Run
@@ -76,3 +76,9 @@ npm start
 - History helpers in `src/domain/history.ts` (day totals, average, streak, goal days)
 - UI in `src/history/` — View-based bar chart (no chart library), stats cards, selected-day entry list
 - Range chips: 7 or 14 days; tap a bar to inspect that day
+
+## M9 notes
+
+- Settings sections in `src/settings/`: profile/goal/quick amounts, data actions, about
+- `useHydrate()` also exposes `clearTodayIntake`, `clearAllIntake`, `resetOnboarding`
+- Destructive actions use confirm alerts; replay onboarding flips `profile.onboarded`

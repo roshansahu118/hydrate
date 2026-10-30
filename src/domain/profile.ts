@@ -1,7 +1,9 @@
 import {
   DEFAULT_QUICK_AMOUNTS_ML,
   MAX_DAILY_GOAL_ML,
+  MAX_QUICK_AMOUNTS,
   MIN_DAILY_GOAL_ML,
+  MIN_QUICK_AMOUNTS,
 } from "./defaults";
 import type { ProfileUpdate, UserProfile } from "./types";
 
@@ -24,7 +26,29 @@ export function normalizeQuickAmounts(amounts: number[]): number[] {
     return [...DEFAULT_QUICK_AMOUNTS_ML];
   }
 
-  return [...new Set(cleaned)].slice(0, 6);
+  const unique = [...new Set(cleaned)].sort((a, b) => a - b);
+  if (unique.length < MIN_QUICK_AMOUNTS) {
+    return [...DEFAULT_QUICK_AMOUNTS_ML];
+  }
+
+  return unique.slice(0, MAX_QUICK_AMOUNTS);
+}
+
+export function toggleQuickAmount(
+  current: number[],
+  amountMl: number,
+): number[] {
+  const exists = current.includes(amountMl);
+  if (exists) {
+    if (current.length <= MIN_QUICK_AMOUNTS) {
+      return current;
+    }
+    return normalizeQuickAmounts(current.filter((value) => value !== amountMl));
+  }
+  if (current.length >= MAX_QUICK_AMOUNTS) {
+    return current;
+  }
+  return normalizeQuickAmounts([...current, amountMl]);
 }
 
 export function applyProfileUpdate(

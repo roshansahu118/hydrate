@@ -39,3 +39,7 @@ export async function removeIntakeEntry(id: string): Promise<IntakeEntry[]> {
   await saveIntakeEntries(next);
   return next;
 }
+
+export async function clearAllIntakeEntries(): Promise<void> {
+  await saveIntakeEntries([]);
+}
