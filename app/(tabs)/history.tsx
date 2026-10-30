@@ -1,17 +1,19 @@
 import { View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import { AppText } from "@/components/AppText";
 import { Screen } from "@/components/Screen";
 import { useTheme } from "@/theme";
 
 export default function HistoryScreen() {
+  const { t } = useTranslation();
   const { colors, spacing, radius } = useTheme();
 
   return (
     <Screen>
-      <AppText variant="title">History</AppText>
+      <AppText variant="title">{t("history.title")}</AppText>
       <AppText variant="body" color="secondary">
-        Charts land in M8. This screen only proves theme + AppText for now.
+        {t("history.subtitle")}
       </AppText>
 
       <View
@@ -28,7 +30,7 @@ export default function HistoryScreen() {
         }}
       >
         <AppText variant="label" color="secondary">
-          Chart placeholder
+          {t("history.chartPlaceholder")}
         </AppText>
       </View>
     </Screen>

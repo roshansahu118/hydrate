@@ -1,4 +1,5 @@
 import { Tabs } from "expo-router";
+import { useTranslation } from "react-i18next";
 
 import { AppText } from "@/components/AppText";
 import { useTheme } from "@/theme";
@@ -21,6 +22,7 @@ function TabIcon({ glyph, color }: { glyph: string; color: string }) {
 
 export default function TabsLayout() {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Tabs
@@ -37,9 +39,9 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: t("tabs.home"),
           tabBarLabel: ({ focused }) => (
-            <TabLabel label="Home" focused={focused} />
+            <TabLabel label={t("tabs.home")} focused={focused} />
           ),
           tabBarIcon: ({ color }) => (
             <TabIcon glyph="💧" color={String(color)} />
@@ -49,9 +51,9 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="history"
         options={{
-          title: "History",
+          title: t("tabs.history"),
           tabBarLabel: ({ focused }) => (
-            <TabLabel label="History" focused={focused} />
+            <TabLabel label={t("tabs.history")} focused={focused} />
           ),
           tabBarIcon: ({ color }) => (
             <TabIcon glyph="📊" color={String(color)} />
@@ -61,9 +63,9 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: "Settings",
+          title: t("tabs.settings"),
           tabBarLabel: ({ focused }) => (
-            <TabLabel label="Settings" focused={focused} />
+            <TabLabel label={t("tabs.settings")} focused={focused} />
           ),
           tabBarIcon: ({ color }) => (
             <TabIcon glyph="⚙️" color={String(color)} />

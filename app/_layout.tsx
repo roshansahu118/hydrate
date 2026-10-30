@@ -2,12 +2,14 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { ActivityIndicator, View } from "react-native";
 
+import { LocaleProvider, useLocale } from "@/i18n";
 import { ThemeProvider, useTheme } from "@/theme";
 
 function RootNavigator() {
-  const { colors, isDark, isReady } = useTheme();
+  const { colors, isDark, isReady: themeReady } = useTheme();
+  const { isReady: localeReady } = useLocale();
 
-  if (!isReady) {
+  if (!themeReady || !localeReady) {
     return (
       <View
         style={{
@@ -25,7 +27,12 @@ function RootNavigator() {
   return (
     <>
       <StatusBar style={isDark ? "light" : "dark"} />
-      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: colors.background },
+        }}
+      >
         <Stack.Screen name="(tabs)" />
       </Stack>
     </>
@@ -35,7 +42,9 @@ function RootNavigator() {
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <RootNavigator />
+      <LocaleProvider>
+        <RootNavigator />
+      </LocaleProvider>
     </ThemeProvider>
   );
 }

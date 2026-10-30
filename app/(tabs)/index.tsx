@@ -1,17 +1,19 @@
 import { View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import { AppText } from "@/components/AppText";
 import { Screen } from "@/components/Screen";
 import { useTheme } from "@/theme";
 
 export default function HomeScreen() {
+  const { t } = useTranslation();
   const { colors, spacing, radius, scheme } = useTheme();
 
   return (
     <Screen>
-      <AppText variant="title">Hydrate</AppText>
+      <AppText variant="title">{t("home.title")}</AppText>
       <AppText variant="body" color="secondary">
-        M1 theme demo — Home shell. Intake logging comes in a later module.
+        {t("home.subtitle")}
       </AppText>
 
       <View
@@ -26,13 +28,13 @@ export default function HomeScreen() {
         }}
       >
         <AppText variant="caption" color="muted">
-          Active scheme
+          {t("home.activeScheme")}
         </AppText>
         <AppText variant="display" color="primary">
-          {scheme === "dark" ? "Dark" : "Light"}
+          {scheme === "dark" ? t("home.dark") : t("home.light")}
         </AppText>
         <AppText variant="body" color="secondary">
-          Change theme from the Settings tab. Preference is saved on device.
+          {t("home.changeThemeHint")}
         </AppText>
       </View>
     </Screen>

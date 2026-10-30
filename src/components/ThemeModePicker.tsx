@@ -1,15 +1,13 @@
 import { Pressable, StyleSheet, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import { useTheme, type ThemeMode } from "../theme";
 import { AppText } from "./AppText";
 
-const OPTIONS: { mode: ThemeMode; label: string }[] = [
-  { mode: "light", label: "Light" },
-  { mode: "dark", label: "Dark" },
-  { mode: "system", label: "System" },
-];
+const OPTIONS: ThemeMode[] = ["light", "dark", "system"];
 
 export function ThemeModePicker() {
+  const { t } = useTranslation();
   const { mode, setMode, colors, spacing, radius } = useTheme();
 
   return (
@@ -26,13 +24,13 @@ export function ThemeModePicker() {
       ]}
     >
       {OPTIONS.map((option) => {
-        const selected = mode === option.mode;
+        const selected = mode === option;
         return (
           <Pressable
-            key={option.mode}
+            key={option}
             accessibilityRole="button"
             accessibilityState={{ selected }}
-            onPress={() => setMode(option.mode)}
+            onPress={() => setMode(option)}
             style={[
               styles.option,
               {
@@ -49,7 +47,7 @@ export function ThemeModePicker() {
               color={selected ? "inverse" : "secondary"}
               style={styles.optionLabel}
             >
-              {option.label}
+              {t(`theme.${option}`)}
             </AppText>
           </Pressable>
         );
