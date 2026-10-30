@@ -14,7 +14,7 @@ Water drink reminder app (React Native + Expo). Built module-wise.
 | M5 Onboarding | Done | Welcome → name → goal; gated until done |
 | M6 Home intake | Done | One-tap add, custom ml, undo, goal status |
 | M7 Notifications | Done | Interval reminders + sound + quiet hours |
-| M8 History + charts | Pending | |
+| M8 History + charts | Done | 7/14-day bars, stats, day drill-down |
 | M9 Settings | Pending | |
 | M10 Polish | Pending | |
 
@@ -70,3 +70,9 @@ npm start
 - **Send test reminder now** button for instant check; sound on; `ReminderSync` keeps schedule fresh
 - **Not supported in browser** — use a phone; grant notification permission when enabling
 - Custom sound: drop `.wav` in `assets/sounds/`, list it in `app.json` → `expo-notifications.sounds`, set filename in `src/notifications/sound.ts`, then **rebuild native** (`eas build` / `npx expo prebuild`). Expo Go cannot load your custom file.
+
+## M8 notes
+
+- History helpers in `src/domain/history.ts` (day totals, average, streak, goal days)
+- UI in `src/history/` — View-based bar chart (no chart library), stats cards, selected-day entry list
+- Range chips: 7 or 14 days; tap a bar to inspect that day

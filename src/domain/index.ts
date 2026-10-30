@@ -22,7 +22,23 @@ export {
   dayKeyFromIso,
   isSameDay,
   formatTime,
+  formatDayHeading,
 } from "./dates";
+
+export {
+  parseDayKey,
+  shiftDayKey,
+  lastNDayKeys,
+  buildDayTotals,
+  averageDailyMl,
+  bestDay,
+  daysGoalMet,
+  currentStreak,
+  formatShortWeekday,
+  formatDayMonth,
+  hasAnyIntake,
+} from "./history";
+export type { DayTotal, HistoryRangeDays } from "./history";
 
 export {
   createIntakeId,

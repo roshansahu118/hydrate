@@ -23,3 +23,24 @@ export function formatTime(iso: string): string {
     minute: "2-digit",
   });
 }
+
+export function formatDayHeading(dayKey: DayKey, locale?: string): string {
+  const today = toDayKey();
+  const date = new Date(
+    Number(dayKey.slice(0, 4)),
+    Number(dayKey.slice(5, 7)) - 1,
+    Number(dayKey.slice(8, 10)),
+  );
+  if (dayKey === today) {
+    return date.toLocaleDateString(locale, {
+      weekday: "long",
+      month: "short",
+      day: "numeric",
+    });
+  }
+  return date.toLocaleDateString(locale, {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+  });
+}
