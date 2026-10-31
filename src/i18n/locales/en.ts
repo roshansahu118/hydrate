@@ -52,6 +52,7 @@ export const en = {
     customPlaceholder: "{{min}}–{{max}} ml",
     customInvalid: "Enter an amount between {{min}} and {{max}} ml",
     addCustom: "Add custom",
+    addAmountA11y: "Add {{amount}} milliliters",
     addedFeedback: "Added {{amount}} ml",
     undo: "Undo",
     dismiss: "OK",
@@ -94,7 +95,7 @@ export const en = {
     permissionDenied:
       "Notification permission is required. Enable it in system Settings.",
     webUnsupported:
-      "Browser pe reminders kaam nahi karte. Phone pe Expo Go se test karo.",
+      "Reminders need iOS or Android. Open the app on your phone (not the browser).",
     intervalLabel: "Remind every",
     intervalChip: "{{minutes}} min",
     customIntervalLabel: "Custom interval (minutes)",
@@ -102,14 +103,14 @@ export const en = {
     applyCustomInterval: "Apply interval",
     quietHoursToggle: "Quiet hours",
     quietHoursHint: "On: no reminders {{start}}–{{end}}",
-    quietHoursOffHint: "Off: reminders can fire overnight (good for testing)",
+    quietHoursOffHint: "Off: reminders can fire overnight",
     testNow: "Send test reminder now",
     soundHint:
-      "Expo Go = phone system sound. Custom drip sound needs a native build (expo run:android / EAS).",
+      "Using the system sound in Expo Go. A native build plays your custom drip tone.",
     soundCustomActive: "Playing custom sound: hydrate_drip.wav",
     notificationTitle: "Time to hydrate 💧",
     notificationBody: "Take a sip of water, then log it in Hydrate.",
-    testNotificationBody: "Test reminder — agar ye dikha, scheduling theek hai.",
+    testNotificationBody: "Test reminder — scheduling looks good.",
   },
   settings: {
     title: "Settings",

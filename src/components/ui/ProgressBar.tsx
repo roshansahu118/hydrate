@@ -1,4 +1,10 @@
-import { View, type StyleProp, type ViewStyle } from "react-native";
+import { useEffect, useRef } from "react";
+import {
+  Animated,
+  View,
+  type StyleProp,
+  type ViewStyle,
+} from "react-native";
 
 import { useTheme } from "../../theme";
 
@@ -11,6 +17,15 @@ export type ProgressBarProps = {
 export function ProgressBar({ progress, style }: ProgressBarProps) {
   const { colors, radius, spacing } = useTheme();
   const clamped = Math.max(0, Math.min(1, progress));
+  const width = useRef(new Animated.Value(clamped)).current;
+
+  useEffect(() => {
+    Animated.timing(width, {
+      toValue: clamped,
+      duration: 280,
+      useNativeDriver: false,
+    }).start();
+  }, [clamped, width]);
 
   return (
     <View
@@ -30,9 +45,12 @@ export function ProgressBar({ progress, style }: ProgressBarProps) {
         style,
       ]}
     >
-      <View
+      <Animated.View
         style={{
-          width: `${clamped * 100}%`,
+          width: width.interpolate({
+            inputRange: [0, 1],
+            outputRange: ["0%", "100%"],
+          }),
           height: "100%",
           backgroundColor: colors.accent,
           borderRadius: radius.full,

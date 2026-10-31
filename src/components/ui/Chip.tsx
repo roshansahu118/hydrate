@@ -19,6 +19,7 @@ export function Chip({
   selected = false,
   disabled,
   style,
+  accessibilityLabel,
   ...rest
 }: ChipProps) {
   const { colors, spacing, radius } = useTheme();
@@ -26,6 +27,7 @@ export function Chip({
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel ?? label}
       accessibilityState={{ selected, disabled: !!disabled }}
       disabled={disabled}
       style={({ pressed }) => [

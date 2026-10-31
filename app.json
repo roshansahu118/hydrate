@@ -37,9 +37,12 @@
         {
           "color": "#1A8FBF",
           "defaultChannel": "hydrate-reminders-custom-v1",
-          "sounds": ["./assets/sounds/hydrate_drip.wav"]
+          "sounds": [
+            "./assets/sounds/hydrate_drip.wav"
+          ]
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true

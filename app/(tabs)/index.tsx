@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 
@@ -25,11 +25,14 @@ import {
   TodayRecentList,
   type IntakeFeedback,
 } from "@/home";
+import { useAppDayKey } from "@/hooks";
 import { useTheme } from "@/theme";
+import { hapticLight, hapticSuccess } from "@/utils/haptics";
 
 export default function HomeScreen() {
   const { t } = useTranslation();
   const { spacing } = useTheme();
+  const dayKey = useAppDayKey();
   const {
     profile,
     todayTotalMl,
@@ -43,6 +46,7 @@ export default function HomeScreen() {
   const [customError, setCustomError] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
   const [feedback, setFeedback] = useState<IntakeFeedback | null>(null);
+  const prevStatus = useRef(goalStatus(todayTotalMl, profile.dailyGoalMl));
 
   const status = goalStatus(todayTotalMl, profile.dailyGoalMl);
   const remaining = remainingMl(todayTotalMl, profile.dailyGoalMl);
@@ -53,10 +57,23 @@ export default function HomeScreen() {
     return () => clearTimeout(timer);
   }, [feedback]);
 
+  useEffect(() => {
+    const previous = prevStatus.current;
+    prevStatus.current = status;
+    if (
+      (status === "reached" || status === "exceeded") &&
+      previous !== "reached" &&
+      previous !== "exceeded"
+    ) {
+      hapticSuccess();
+    }
+  }, [status, dayKey]);
+
   async function logIntake(amountMl: number) {
     setAdding(true);
     try {
       const entry = await addIntake(amountMl);
+      hapticLight();
       setFeedback({ amountMl: entry.amountMl, entryId: entry.id });
       setCustomAmount("");
       setCustomError(null);
@@ -87,7 +104,7 @@ export default function HomeScreen() {
 
   return (
     <Screen scroll>
-      <AppText variant="title">
+      <AppText variant="title" accessibilityRole="header">
         {profile.name
           ? t("home.greeting", { name: profile.name })
           : t("home.title")}
@@ -145,6 +162,7 @@ export default function HomeScreen() {
               key={amount}
               label={t("home.mlAmount", { amount })}
               disabled={adding}
+              accessibilityLabel={t("home.addAmountA11y", { amount })}
               onPress={() => {
                 void logIntake(amount);
               }}
@@ -169,10 +187,12 @@ export default function HomeScreen() {
           keyboardType="number-pad"
           returnKeyType="done"
           error={
-            customError ? t("home.customInvalid", {
-              min: MIN_INTAKE_ML,
-              max: MAX_INTAKE_ML,
-            }) : undefined
+            customError
+              ? t("home.customInvalid", {
+                  min: MIN_INTAKE_ML,
+                  max: MAX_INTAKE_ML,
+                })
+              : undefined
           }
           onSubmitEditing={submitCustom}
         />

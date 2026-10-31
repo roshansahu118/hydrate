@@ -16,7 +16,7 @@ Water drink reminder app (React Native + Expo). Built module-wise.
 | M7 Notifications | Done | Interval reminders + sound + quiet hours |
 | M8 History + charts | Done | 7/14-day bars, stats, day drill-down |
 | M9 Settings | Done | Goal, quick amounts, data reset, about |
-| M10 Polish | Pending | |
+| M10 Polish | Done | Fonts, haptics, day rollover, a11y, copy |
 
 ## Run
 
@@ -82,3 +82,11 @@ npm start
 - Settings sections in `src/settings/`: profile/goal/quick amounts, data actions, about
 - `useHydrate()` also exposes `clearTodayIntake`, `clearAllIntake`, `resetOnboarding`
 - Destructive actions use confirm alerts; replay onboarding flips `profile.onboarded`
+
+## M10 notes
+
+- DM Sans via `FontProvider` + `expo-font`
+- Haptics on log / goal reached / chart interactions (`src/utils/haptics.ts`)
+- `useAppDayKey` refreshes Home/History after midnight
+- Screen: keyboard avoiding + bottom inset; progress bar animates; product copy cleaned
+- Tab bar hides on keyboard; chip a11y labels; `maxFontSizeMultiplier` on AppText

@@ -3,8 +3,8 @@ import type { TextStyle } from "react-native";
 export type FontWeightKey = "regular" | "medium" | "semibold" | "bold";
 
 /**
- * Swap these values later when custom fonts are loaded via expo-font.
- * Example: regular: "Inter_400Regular"
+ * Filled by FontProvider after DM Sans loads via expo-font.
+ * Until then AppText falls back to system fonts via fontWeight.
  */
 export const fonts: Record<FontWeightKey, string | undefined> = {
   regular: undefined,
@@ -12,6 +12,12 @@ export const fonts: Record<FontWeightKey, string | undefined> = {
   semibold: undefined,
   bold: undefined,
 };
+
+export function setLoadedFonts(
+  next: Partial<Record<FontWeightKey, string | undefined>>,
+): void {
+  Object.assign(fonts, next);
+}
 
 export type TypographyVariant =
   | "display"

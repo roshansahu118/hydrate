@@ -5,7 +5,7 @@ import { ActivityIndicator, View } from "react-native";
 import { HydrateProvider, useHydrate } from "@/data";
 import { LocaleProvider, useLocale } from "@/i18n";
 import { ReminderSync } from "@/notifications";
-import { ThemeProvider, useTheme } from "@/theme";
+import { FontProvider, ThemeProvider, useTheme } from "@/theme";
 
 function RootNavigator() {
   const { colors, isDark, isReady: themeReady } = useTheme();
@@ -34,6 +34,7 @@ function RootNavigator() {
         screenOptions={{
           headerShown: false,
           contentStyle: { backgroundColor: colors.background },
+          animation: "fade",
         }}
       >
         <Stack.Protected guard={!profile.onboarded}>
@@ -49,13 +50,15 @@ function RootNavigator() {
 
 export default function RootLayout() {
   return (
-    <ThemeProvider>
-      <LocaleProvider>
-        <HydrateProvider>
-          <ReminderSync />
-          <RootNavigator />
-        </HydrateProvider>
-      </LocaleProvider>
-    </ThemeProvider>
+    <FontProvider>
+      <ThemeProvider>
+        <LocaleProvider>
+          <HydrateProvider>
+            <ReminderSync />
+            <RootNavigator />
+          </HydrateProvider>
+        </LocaleProvider>
+      </ThemeProvider>
+    </FontProvider>
   );
 }

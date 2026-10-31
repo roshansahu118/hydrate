@@ -8,6 +8,7 @@ import {
 import {
   fontFamilyFor,
   typography,
+  useFontReady,
   useTheme,
   type TypographyVariant,
 } from "../theme";
@@ -33,17 +34,22 @@ export function AppText({
   ...rest
 }: AppTextProps) {
   const { colors } = useTheme();
+  useFontReady(); // re-render when DM Sans finishes loading
   const token = typography[variant];
+  const family = fontFamilyFor(token.fontKey);
 
   return (
     <Text
       {...rest}
+      maxFontSizeMultiplier={rest.maxFontSizeMultiplier ?? 1.35}
       style={[
         {
           fontSize: token.fontSize,
           lineHeight: token.lineHeight,
-          fontWeight: token.fontWeight,
-          fontFamily: fontFamilyFor(token.fontKey),
+          // Weight fonts are separate files — avoid double-bolding when loaded.
+          ...(family
+            ? { fontFamily: family, fontWeight: "400" as const }
+            : { fontWeight: token.fontWeight }),
           color: colors.text[color],
         },
         style,

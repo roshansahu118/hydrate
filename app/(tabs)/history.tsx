@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
@@ -22,12 +22,13 @@ import {
   formatTime,
   hasAnyIntake,
   lastNDayKeys,
-  toDayKey,
   type HistoryRangeDays,
 } from "@/domain";
 import { HistoryStats, WeeklyBarChart } from "@/history";
+import { useAppDayKey } from "@/hooks";
 import { useLocale } from "@/i18n";
 import { useTheme } from "@/theme";
+import { hapticLight } from "@/utils/haptics";
 
 export default function HistoryScreen() {
   const { t, i18n } = useTranslation();
@@ -37,9 +38,15 @@ export default function HistoryScreen() {
   const { entries, profile, removeIntake } = useHydrate();
 
   const locale = language === "hi" ? "hi-IN" : i18n.language;
-  const todayKey = toDayKey();
+  const todayKey = useAppDayKey();
   const [rangeDays, setRangeDays] = useState<HistoryRangeDays>(7);
   const [selectedDayKey, setSelectedDayKey] = useState(todayKey);
+
+  useEffect(() => {
+    setSelectedDayKey((current) =>
+      current === todayKey ? current : todayKey,
+    );
+  }, [todayKey]);
 
   const dayKeys = useMemo(
     () => lastNDayKeys(rangeDays, todayKey),
@@ -81,12 +88,18 @@ export default function HistoryScreen() {
         <Chip
           label={t("history.range7")}
           selected={rangeDays === 7}
-          onPress={() => setRangeDays(7)}
+          onPress={() => {
+            hapticLight();
+            setRangeDays(7);
+          }}
         />
         <Chip
           label={t("history.range14")}
           selected={rangeDays === 14}
-          onPress={() => setRangeDays(14)}
+          onPress={() => {
+            hapticLight();
+            setRangeDays(14);
+          }}
         />
       </View>
 
@@ -110,7 +123,10 @@ export default function HistoryScreen() {
               totals={totals}
               goalMl={profile.dailyGoalMl}
               selectedDayKey={selectedDayKey}
-              onSelectDay={setSelectedDayKey}
+              onSelectDay={(dayKey) => {
+                hapticLight();
+                setSelectedDayKey(dayKey);
+              }}
               locale={locale}
             />
           </Card>
