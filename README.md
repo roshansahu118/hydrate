@@ -17,6 +17,7 @@ Water drink reminder app (React Native + Expo). Built module-wise.
 | M8 History + charts | Done | 7/14-day bars, stats, day drill-down |
 | M9 Settings | Done | Goal, quick amounts, data reset, about |
 | M10 Polish | Done | Fonts, haptics, day rollover, a11y, copy |
+| Next phase | Later | Good Wisher care-network + backend |
 
 ## Run
 
@@ -90,3 +91,33 @@ npm start
 - `useAppDayKey` refreshes Home/History after midnight
 - Screen: keyboard avoiding + bottom inset; progress bar animates; product copy cleaned
 - Tab bar hides on keyboard; chip a11y labels; `maxFontSizeMultiplier` on AppText
+
+## Next phase (later)
+
+Good Wisher care-network — **not started**. Build after the current local app is stable. Needs auth, backend, and push (cross-device); not part of M0–M10.
+
+### Product
+
+- Login → unique invite code per user
+- **Owner** adds a wisher by entering the **wisher’s code** in Settings (max **5** wishers)
+- **Wisher** is notified and must **Accept / Decline** (no silent linking)
+- A wisher may link to **many owners**; both sides can unlink
+- Owner: per-wisher care-reminder **sound on/off**
+- Wishers can set care reminders for the owner (e.g. “drink water” / “eat”) delivered as push
+
+### Link states
+
+`pending` → `active` | `declined` (plus removed by owner or wisher). Pending invites should expire (e.g. 48h).
+
+### Backend (planned)
+
+- Prefer **Supabase** (Auth + Postgres) with this Expo app; optional `/backend` only if needed later
+- Register device push tokens; send via **Expo Push**
+- Schedule care reminders server-side (Edge Functions or small API + job)
+- App installs roughly: `@supabase/supabase-js`, `expo-secure-store` (session), existing `expo-notifications`
+
+### Cost note (rough)
+
+- Early: free tiers for DB/auth/push
+- Store: Google Play **$25** one-time; iOS **Apple Developer ~$99/year**
+- Paid hosting/DB/EAS only when free limits are exceeded
